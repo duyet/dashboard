@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 100 900;
+  font-display: block;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url(/fonts/Inter-roman.var.woff2) format('woff2');
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 100 900;
+  font-display: block;
+  font-style: italic;
+  font-named-instance: 'Italic';
+  src: url(/fonts/Inter-italic.var.woff2) format('woff2');
+}
+@font-face {
+  font-family: JetBrainsMono;
+  font-weight: 400;
+  font-display: block;
+  font-style: normal;
+  font-named-instance: 'Regular';
+  src: url(/fonts/JetBrainsMono-Regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: JetBrainsMono;
+  font-weight: 400;
+  font-display: block;
+  font-style: italic;
+  font-named-instance: 'Italic';
+  src: url(/fonts/JetBrainsMono-Italic.woff2) format('woff2');
+}
