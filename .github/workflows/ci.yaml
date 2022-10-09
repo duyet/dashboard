@@ -9,6 +9,7 @@ on:
 
 jobs:
   ci:
+    name: Build and Export
     runs-on: ubuntu-latest
 
     steps:
