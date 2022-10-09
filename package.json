@@ -1,13 +1,19 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "yarn lint && next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "fmt": "prettier --write ."
+  },
+  "release": {
+    "branches": [
+      "master"
+    ]
   },
   "dependencies": {
     "@heroicons/react": "v1",
