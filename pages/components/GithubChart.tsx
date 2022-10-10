@@ -1,4 +1,4 @@
-import { AreaChart, Block } from '@tremor/react'
+import { AreaChart, Block, Card } from '@tremor/react'
 
 import { useGithubEvents } from '../../hooks/github'
 import { GithubEvent } from '../../types/githubEvents'
@@ -83,12 +83,14 @@ export default function GithubChart({ username }: TableViewProps) {
     <Block>
       <GithubUserStats username={username} marginTop="mt-10" />
 
-      <AreaChart
-        data={chartdata}
-        categories={categories}
-        dataKey="date"
-        marginTop="mt-4"
-      />
+      <Card marginTop="mt-5">
+        <AreaChart
+          data={chartdata}
+          categories={categories}
+          dataKey="date"
+          marginTop="mt-4"
+        />
+      </Card>
     </Block>
   )
 }

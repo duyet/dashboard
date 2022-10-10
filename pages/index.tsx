@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Block, Flex, Tab, TabList, Title, Card } from '@tremor/react'
+import { Block, Flex, Tab, TabList, Title } from '@tremor/react'
 
 import KpiCardGrid from './components/Cards'
 import Chart from './components/Chart'
@@ -29,18 +29,16 @@ export default function Page() {
 
       {selectedView == 1 && (
         <Block marginTop="mt-6">
-          <Card>
-            <Flex>
-              <Block> </Block>
-              <GithubUserPicker
-                list={GITHUB_USERS}
-                selectedUser={selectedUser}
-                setSelectedUser={setSelectedUser}
-              />
-            </Flex>
-            <GithubChart username={selectedUser} />
-            <GithubEvents username={selectedUser} />
-          </Card>
+          <Flex>
+            <Block> </Block>
+            <GithubUserPicker
+              list={GITHUB_USERS}
+              selectedUser={selectedUser}
+              setSelectedUser={setSelectedUser}
+            />
+          </Flex>
+          <GithubChart username={selectedUser} />
+          <GithubEvents username={selectedUser} />
         </Block>
       )}
 
