@@ -51,7 +51,7 @@ export default function GithubEvents({ username }: TableViewProps) {
   }
 
   return (
-    <Card>
+    <Card marginTop="mt-5">
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <MultiSelectBox
           handleSelect={(value) => setSelectedType(value)}
