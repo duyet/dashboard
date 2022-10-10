@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 
 import { GithubEvents } from '../types/githubEvents'
+import { GithubUser } from '../types/githubUser'
 import fetcher from '../libs/fetch'
 
 export const useGithubEvents = (user: string) => {
@@ -28,6 +29,19 @@ export const useGithubEvents = (user: string) => {
     repos,
     eventTypes,
     actions,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export const useGithubUser = (user: string) => {
+  const { data, error } = useSWR<GithubUser>(
+    `https://api.github.com/users/${user}`,
+    fetcher
+  )
+
+  return {
+    user: data,
     isLoading: !error && !data,
     isError: error,
   }

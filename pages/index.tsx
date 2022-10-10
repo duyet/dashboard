@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Block, Tab, TabList, Title, Card } from '@tremor/react'
+import { Block, Flex, Tab, TabList, Title, Card } from '@tremor/react'
 
 import KpiCardGrid from './components/Cards'
 import Chart from './components/Chart'
 
-import GithubUser from './components/GithubUser'
+import GithubUserPicker from './components/GithubUserPicker'
 import GithubEvents from './components/GithubEvents'
 import GithubChart from './components/GithubChart'
 
@@ -30,11 +30,14 @@ export default function Page() {
       {selectedView == 1 && (
         <Block marginTop="mt-6">
           <Card>
-            <GithubUser
-              list={GITHUB_USERS}
-              selectedUser={selectedUser}
-              setSelectedUser={setSelectedUser}
-            />
+            <Flex>
+              <Block> </Block>
+              <GithubUserPicker
+                list={GITHUB_USERS}
+                selectedUser={selectedUser}
+                setSelectedUser={setSelectedUser}
+              />
+            </Flex>
             <GithubChart username={selectedUser} />
             <GithubEvents username={selectedUser} />
           </Card>

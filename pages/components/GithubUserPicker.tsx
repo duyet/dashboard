@@ -16,11 +16,11 @@ export default function GithubUser({
 
   return (
     <Dropdown
-      placeholder='User'
+      placeholder="User"
       defaultValue={selectedUser}
       handleSelect={(value) => setSelectedUser(value)}
-      maxWidth='max-w-none'
-      marginTop='mt-0'
+      maxWidth="max-w-none"
+      marginTop="mt-0"
     >
       {list.map((user) => (
         <DropdownItem key={user} text={user} value={user} />
