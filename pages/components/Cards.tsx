@@ -8,16 +8,16 @@ import {
   Metric,
   ProgressBar,
   Text,
-} from '@tremor/react';
+} from '@tremor/react'
 
 type Kpi = {
-  title: string;
-  metric: string;
-  progress: number;
-  target: string;
-  delta: string;
-  deltaType: DeltaType;
-};
+  title: string
+  metric: string
+  progress: number
+  target: string
+  delta: string
+  deltaType: DeltaType
+}
 
 const kpiData: Kpi[] = [
   {
@@ -44,7 +44,7 @@ const kpiData: Kpi[] = [
     delta: '10.1%',
     deltaType: 'moderateDecrease',
   },
-];
+]
 
 export default function KpiCardGrid() {
   return (
@@ -72,5 +72,5 @@ export default function KpiCardGrid() {
         </Card>
       ))}
     </ColGrid>
-  );
+  )
 }
