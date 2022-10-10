@@ -24,12 +24,14 @@ describe('index page', () => {
 
   it('should navigate to the first tab', () => {
     cy.get('main ol li').first().click()
+
+    // Should contains the <table>
+    cy.get('main table').should('have.length', 1)
+
+    // TODO: Should contains the dropdown
   })
 
   it('should navigate to the second tab', () => {
     cy.get('main ol li').eq(1).click()
-
-    // Should contains the <table>
-    cy.get('main table').should('have.length', 1)
   })
 })

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   Badge,
   Card,
@@ -12,42 +12,43 @@ import {
   TableHeaderCell,
   TableRow,
   Text,
-} from '@tremor/react';
+} from '@tremor/react'
 
-import { useGithubEvents } from '../../hooks/github';
+import Loading from './Loading'
+import { useGithubEvents } from '../../hooks/github'
 
 // TableView props type
 type TableViewProps = {
-  username: string;
-};
+  username: string
+}
 
-export default function TableView({ username }: TableViewProps) {
-  const [selectedType, setSelectedType] = useState<string[]>([]);
-  const [selectedRepos, setSelectedRepos] = useState<string[]>([]);
+export default function GithubEvents({ username }: TableViewProps) {
+  const [selectedType, setSelectedType] = useState<string[]>([])
+  const [selectedRepos, setSelectedRepos] = useState<string[]>([])
 
   const { events, repos, eventTypes, isLoading, isError } =
-    useGithubEvents(username);
+    useGithubEvents(username)
 
-  if (isError) return <p>Error...</p>;
-  if (isLoading) return <p>Loading...</p>;
-  if (!events) return <p>No events</p>;
+  if (isError) return <p>Error...</p>
+  if (isLoading) return <Loading />
+  if (!events) return <p>No events</p>
 
   const isRepoSelected = (item: any) =>
     (selectedRepos.includes(item.repo.name) || selectedRepos.length === 0) &&
-    (selectedType.includes(item.type) || selectedType.length === 0);
+    (selectedType.includes(item.type) || selectedType.length === 0)
 
   const badgeEventTypeColor = (type: string) => {
     switch (type) {
       case 'PushEvent':
-        return 'green';
+        return 'green'
       case 'PullRequestEvent':
-        return 'blue';
+        return 'blue'
       case 'DeleteEvent':
-        return 'red';
+        return 'red'
       default:
-        return 'gray';
+        return 'gray'
     }
-  };
+  }
 
   return (
     <Card>
@@ -114,5 +115,5 @@ export default function TableView({ username }: TableViewProps) {
         </TableBody>
       </Table>
     </Card>
-  );
+  )
 }

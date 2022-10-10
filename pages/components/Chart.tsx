@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import {
   AreaChart,
   Block,
@@ -9,8 +9,8 @@ import {
   Title,
   Toggle,
   ToggleItem,
-} from '@tremor/react';
-import { InformationCircleIcon } from '@heroicons/react/outline';
+} from '@tremor/react'
+import { InformationCircleIcon } from '@heroicons/react/outline'
 
 export const performance = [
   {
@@ -31,24 +31,24 @@ export const performance = [
     Profit: 682,
     Customers: 682,
   },
-];
+]
 
 // Basic formatters for the chart values
 const dollarFormatter = (value: number) =>
-  `$ ${Intl.NumberFormat('us').format(value).toString()}`;
+  `$ ${Intl.NumberFormat('us').format(value).toString()}`
 
 const numberFormatter = (value: number) =>
-  `${Intl.NumberFormat('us').format(value).toString()}`;
+  `${Intl.NumberFormat('us').format(value).toString()}`
 
 export default function ChartView() {
-  const [selectedKpi, setSelectedKpi] = useState('Sales');
+  const [selectedKpi, setSelectedKpi] = useState('Sales')
 
   // map formatters by selectedKpi
   const formatters: { [key: string]: any } = {
     Sales: dollarFormatter,
     Profit: dollarFormatter,
     Customers: numberFormatter,
-  };
+  }
 
   return (
     <Card>
@@ -92,5 +92,5 @@ export default function ChartView() {
         marginTop="mt-8"
       />
     </Card>
-  );
+  )
 }
