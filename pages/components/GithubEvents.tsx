@@ -15,6 +15,7 @@ import {
 } from '@tremor/react'
 
 import Loading from './Loading'
+import Error from './Error'
 import { useGithubEvents } from '../../hooks/github'
 
 // TableView props type
@@ -26,10 +27,10 @@ export default function GithubEvents({ username }: TableViewProps) {
   const [selectedType, setSelectedType] = useState<string[]>([])
   const [selectedRepos, setSelectedRepos] = useState<string[]>([])
 
-  const { events, repos, eventTypes, isLoading, isError } =
+  const { events, repos, eventTypes, isLoading, isError, errorMessage } =
     useGithubEvents(username)
 
-  if (isError) return <p>Error...</p>
+  if (isError && errorMessage) return <Error message={errorMessage} />
   if (isLoading) return <Loading />
   if (!events) return <p>No events</p>
 
