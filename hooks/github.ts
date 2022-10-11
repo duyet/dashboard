@@ -1,36 +1,75 @@
 import useSWR from 'swr'
 
-import { GithubEvents } from '../types/githubEvents'
+import { GithubEvent } from '../types/githubEvents'
 import { GithubUser } from '../types/githubUser'
-import fetcher from '../libs/fetch'
+import { GithubError } from '../types/githubError'
 
-export const useGithubEvents = (user: string) => {
-  const { data, error } = useSWR<GithubEvents>(
-    `https://api.github.com/users/${user}/events?per_page=100`,
-    fetcher
+import { fetcher, fetcherMultiple } from '../libs/fetch'
+
+export const useGithubEvents = (
+  user: string,
+  total_page: number = 3,
+  per_page: number = 50
+) => {
+  const urls = Array.from(Array(total_page).keys()).map(
+    (i) =>
+      `https://api.github.com/users/${user}/events?per_page=${per_page}&page=${
+        i + 1
+      }`
   )
 
-  if (!data) return { isLoading: true, isError: false }
+  const { data, error } = useSWR<Array<GithubEvent[] | GithubError>>(
+    urls,
+    fetcherMultiple
+  )
 
-  const repos = data
-    .map((item) => item.repo.name)
+  if (!data) return { isLoading: true, isError: true }
+
+  if (error) return { isLoading: false, isError: true }
+
+  // Data is array of array
+  let allData: GithubEvent[] = (data as Array<GithubEvent[]>)
+    .filter((item) => !!item)
+    .filter(Array.isArray)
+    .flat()
+
+  // Error capturing on each data: { message: 'API rate limit ...' }
+  const isError = (data as GithubError[]).some(
+    (item: GithubError) => !!item.message
+  )
+  const errorMessage = (data as GithubError[])
+    .filter((item: GithubError) => !!item.message)
+    .map((item: GithubError) => item.message)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .join(', ')
+
+  if (isError && errorMessage) {
+    return {
+      isLoading: false,
+      isError: true,
+      errorMessage,
+    }
+  }
+
+  const repos = allData
+    .map((item: GithubEvent) => item.repo.name)
     .filter((elem, index, self) => index === self.indexOf(elem))
 
-  const eventTypes = data
-    .map((item) => item.type)
+  const eventTypes = allData
+    .map((item: GithubEvent) => item.type)
     .filter((elem, index, self) => index === self.indexOf(elem))
 
-  const actions = data
-    .map((item) => item.payload.action)
+  const actions = allData
+    .map((item: GithubEvent) => item.payload.action)
     .filter((elem, index, self) => index === self.indexOf(elem))
 
   return {
-    events: data,
+    events: allData,
     repos,
     eventTypes,
     actions,
     isLoading: !error && !data,
-    isError: error,
+    isError,
   }
 }
 

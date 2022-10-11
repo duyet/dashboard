@@ -3,6 +3,7 @@ import { AreaChart, Block, Card } from '@tremor/react'
 import { useGithubEvents } from '../../hooks/github'
 import { GithubEvent } from '../../types/githubEvents'
 import Loading from './Loading'
+import Error from './Error'
 import GithubUserStats from './GithubUserStats'
 
 type ChartData = {
@@ -72,7 +73,7 @@ type TableViewProps = {
 export default function GithubChart({ username }: TableViewProps) {
   const { events, isLoading, isError } = useGithubEvents(username)
 
-  if (isError) return <p>Error...</p>
+  if (isError) return <Error />
   if (isLoading) return <Loading />
   if (!events) return <p>No events</p>
 

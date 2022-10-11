@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Head from 'next/head'
 import { Block, Flex, Tab, TabList, Title } from '@tremor/react'
 
 import KpiCardGrid from './components/Cards'
@@ -17,6 +18,10 @@ export default function Page() {
 
   return (
     <main className="bg-slate-50 p-12">
+      <Head>
+        <title>Dashboard</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Title>Dashboard</Title>
       <TabList
         defaultValue={1}
