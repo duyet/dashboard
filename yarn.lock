@@ -215,13 +215,12 @@
   dependencies:
     tippy.js "^6.3.1"
 
-"@tremor/react@1.1.0", "@tremor/react@^1.0.12":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-1.1.0.tgz#f8beb1ffac85bfaa79a4bfca14c7cafa275b59e9"
-  integrity sha512-NLg8OmXN8ZIokbPkAs/MCxh3nDkG76MfVsuLr1uQxtnXsJ4lzhtYcmJWr2UgwBwcYFZdSytJM0943t+xAeIZlg==
+"@tremor/react@1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-1.1.4.tgz#14eb1db660f9edb7fcc3c94e932d198dfbafc83c"
+  integrity sha512-MFARbZOxOKMS3JImuQaTxd1Pr5NmwTKeEYoE9wPGUmdI95jh1O48s1s9qaKc55mBXBEejU1hVKnqxc6Xm2wRyA==
   dependencies:
     "@tippyjs/react" "^4.2.6"
-    "@tremor/react" "^1.0.12"
     date-fns "^2.28.0"
     recharts "^2.1.13"
 
