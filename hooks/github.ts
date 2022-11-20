@@ -23,8 +23,7 @@ export const useGithubEvents = (
     fetcherMultiple
   )
 
-  if (!data) return { isLoading: true, isError: true }
-
+  if (!data) return { isLoading: true, isError: false }
   if (error) return { isLoading: false, isError: true }
 
   // Data is array of array
