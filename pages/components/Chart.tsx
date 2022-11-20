@@ -61,7 +61,7 @@ export default function ChartView() {
           >
             <Title> Performance History </Title>
             <Icon
-              Icon={InformationCircleIcon}
+              icon={InformationCircleIcon}
               variant="simple"
               tooltip="Shows day-over-day (%) changes of past performance"
             />
