@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Block, Flex, Tab, TabList, Title } from '@tremor/react'
 
@@ -20,11 +19,7 @@ export default function Page() {
   const [selectedView, setSelectedView] = useState(1)
 
   return (
-    <main className='bg-slate-50 p-12'>
-      <Head>
-        <title>Dashboard</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
+    <>
       <Title>Dashboard</Title>
       <TabList
         defaultValue={1}
@@ -58,6 +53,20 @@ export default function Page() {
           </Block>
         </>
       )}
-    </main>
+    </>
   )
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: GITHUB_USERS.map((username) => ({ params: { username } })),
+    fallback: false, // can also be true or 'blocking'
+  }
+}
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps() {
+  return {
+    props: {},
+  }
 }
