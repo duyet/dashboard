@@ -7,7 +7,7 @@ export async function fetcher<JSON = any>(
 }
 
 export async function fetcherMultiple<JSON = any>(
-  ...urls: string[]
+  urls: string[]
 ): Promise<JSON> {
   const f = (url: string) => fetch(url).then((r) => r.json())
   return Promise.all(urls.map((url) => f(url))) as Promise<JSON>

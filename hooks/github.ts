@@ -11,20 +11,19 @@ export const useGithubEvents = (
   total_page: number = 3,
   per_page: number = 50
 ) => {
-  const urls = Array.from(Array(total_page).keys()).map(
-    (i) =>
-      `https://api.github.com/users/${user}/events?per_page=${per_page}&page=${
-        i + 1
-      }`
+  const pages = Array.from(Array(total_page).keys()).map((i) => i + 1)
+  const urls = pages.map(
+    (page) =>
+      `https://api.github.com/users/${user}/events?per_page=${per_page}&page=${page}`
   )
 
-  const { data, error } = useSWR<Array<GithubEvent[] | GithubError>>(
+  const { data, error, isLoading } = useSWR<Array<GithubEvent[] | GithubError>>(
     urls,
     fetcherMultiple
   )
 
-  if (!data) return { isLoading: true, isError: false }
-  if (error) return { isLoading: false, isError: true }
+  if (!data) return { isLoading, isError: false }
+  if (error) return { isLoading, isError: true }
 
   // Data is array of array
   let allData: GithubEvent[] = (data as Array<GithubEvent[]>)
@@ -44,7 +43,7 @@ export const useGithubEvents = (
 
   if (isError && errorMessage) {
     return {
-      isLoading: false,
+      isLoading,
       isError: true,
       errorMessage,
     }
