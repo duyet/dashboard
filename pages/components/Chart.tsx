@@ -72,7 +72,7 @@ export default function ChartView() {
           <Toggle
             color="zinc"
             defaultValue={selectedKpi}
-            handleSelect={(value) => setSelectedKpi(value)}
+            onValueChange={(value: string) => setSelectedKpi(value)}
           >
             <ToggleItem value="Sales" text="Sales" />
             <ToggleItem value="Profit" text="Profit" />

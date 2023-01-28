@@ -24,7 +24,7 @@ type TableViewProps = {
 }
 
 export default function GithubEvents({ username }: TableViewProps) {
-  const [selectedType, setSelectedType] = useState<string[]>([])
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
   const [selectedRepos, setSelectedRepos] = useState<string[]>([])
 
   const { events, repos, eventTypes, isLoading, isError, errorMessage } =
@@ -36,7 +36,7 @@ export default function GithubEvents({ username }: TableViewProps) {
 
   const isRepoSelected = (item: any) =>
     (selectedRepos.includes(item.repo.name) || selectedRepos.length === 0) &&
-    (selectedType.includes(item.type) || selectedType.length === 0)
+    (selectedTypes.includes(item.type) || selectedTypes.length === 0)
 
   const badgeEventTypeColor = (type: string) => {
     switch (type) {
@@ -52,28 +52,28 @@ export default function GithubEvents({ username }: TableViewProps) {
   }
 
   return (
-    <Card marginTop="mt-5">
-      <Flex justifyContent="justify-start" spaceX="space-x-2">
+    <Card marginTop='mt-5'>
+      <Flex justifyContent='justify-start' spaceX='space-x-2'>
         <MultiSelectBox
-          handleSelect={(value) => setSelectedType(value)}
-          placeholder="Event Type(s)"
-          maxWidth="max-w-xs"
+          onValueChange={(value: string[]) => setSelectedTypes(value)}
+          placeholder='Event Type(s)'
+          maxWidth='max-w-xs'
         >
           {eventTypes.map((type) => (
             <MultiSelectBoxItem key={type} value={type} text={type} />
           ))}
         </MultiSelectBox>
         <MultiSelectBox
-          handleSelect={(value) => setSelectedRepos(value)}
-          placeholder="Repo(s)"
-          maxWidth="max-w-xs"
+          onValueChange={(value: string[]) => setSelectedRepos(value)}
+          placeholder='Repo(s)'
+          maxWidth='max-w-xs'
         >
           {repos.map((name) => (
             <MultiSelectBoxItem key={name} value={name} text={name} />
           ))}
         </MultiSelectBox>
       </Flex>
-      <Table marginTop="mt-6">
+      <Table marginTop='mt-6'>
         <TableHead>
           <TableRow>
             <TableHeaderCell>Event Time</TableHeaderCell>
@@ -89,7 +89,7 @@ export default function GithubEvents({ username }: TableViewProps) {
             .map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <Text color="gray" truncate={true}>
+                  <Text color='gray' truncate={true}>
                     {item.created_at}
                   </Text>
                 </TableCell>
@@ -102,8 +102,8 @@ export default function GithubEvents({ username }: TableViewProps) {
                 <TableCell>
                   <a
                     href={'https://github.com/' + item.repo.name}
-                    target="_blank"
-                    rel="noreferrer"
+                    target='_blank'
+                    rel='noreferrer'
                   >
                     {item.repo.name}
                   </a>

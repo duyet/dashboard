@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Block, Flex, Tab, TabList, Title } from '@tremor/react'
+import { Block, Flex, Tab, TabList, Title, ColGrid } from '@tremor/react'
 
-import KpiCardGrid from './components/Cards'
 import Chart from './components/Chart'
-
-import GithubUserPicker from './components/GithubUserPicker'
-import GithubEvents from './components/GithubEvents'
+import KpiCardGrid from './components/Cards'
 import GithubChart from './components/GithubChart'
+import GithubEvents from './components/GithubEvents'
+import GithubUserPicker from './components/GithubUserPicker'
+import GithubTopRepoStats from './components/GithubTopRepoStats'
+import GithubEventTypeStats from './components/GithubEventTypeStats'
 
 // TODO: input from user
 const GITHUB_USERS = ['duyet', 'duyetbot']
@@ -23,7 +24,7 @@ export default function Page() {
       <Title>Dashboard</Title>
       <TabList
         defaultValue={1}
-        handleSelect={(value) => setSelectedView(value)}
+        onValueChange={(value) => setSelectedView(value)}
         marginTop='mt-6'
       >
         <Tab value={1} text='Github Events' />
@@ -40,6 +41,10 @@ export default function Page() {
             />
           </Flex>
           <GithubChart username={username} />
+          <ColGrid numColsSm={2} gapX='gap-x-6' gapY='gap-y-6'>
+            <GithubTopRepoStats username={username} />
+            <GithubEventTypeStats username={username} />
+          </ColGrid>
           <GithubEvents username={username} />
         </Block>
       )}
