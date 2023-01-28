@@ -1,0 +1,106 @@
+import { useEffect, useState } from 'react'
+import { Title, Text, Bold } from '@tremor/react'
+import { Flex, Card, BarList, Dropdown, DropdownItem } from '@tremor/react'
+
+import { useGithubEvents } from '../../hooks/github'
+import { GithubEvent } from '../../types/githubEvents'
+
+type GithubEventTypeStatsProps = {
+  username: string
+}
+
+type Data = {
+  repo: string
+  name: string
+  value: number
+}
+
+const sortData = (data: any[]) =>
+  data.sort((a, b) => {
+    if (a.value < b.value) return 1
+    if (a.value > b.value) return -1
+    return 0
+  })
+
+const filterByRepoName = (repo: string, data: Data[]) =>
+  data.filter((item) => item.repo === repo)
+
+export default function GithubEventTypeStats({
+  username,
+}: GithubEventTypeStatsProps) {
+  const { repos, events, isLoading, isError } = useGithubEvents(username)
+  const [data, setData] = useState<Data[]>([])
+  const [filteredData, setFilteredData] = useState<Data[]>([])
+  const [selectedRepo, setSelectedRepo] = useState('all')
+
+  useEffect(() => {
+    if (!repos || !events) {
+      return
+    }
+
+    const eventTypes = events
+      .map((item: GithubEvent) => item.type)
+      .filter((elem, index, self) => index === self.indexOf(elem))
+
+    const eventCountByRepo: Data[] = repos.flatMap((repo: string) => {
+      const filteredEvents = events.filter(
+        (item: GithubEvent) => item.repo.name === repo
+      )
+
+      return eventTypes.map((type) => ({
+        repo: repo,
+        name: type,
+        value: filteredEvents.filter((item: GithubEvent) => item.type === type)
+          .length,
+      }))
+    })
+
+    const eventCountAllRepo: Data[] = eventTypes.map((type) => ({
+      repo: 'all',
+      name: type,
+      value: events.filter((item: GithubEvent) => item.type === type).length,
+    }))
+
+    setData(Object.assign([], eventCountByRepo, eventCountAllRepo))
+  }, [repos, events])
+
+  useEffect(() => {
+    const filtered = filterByRepoName(selectedRepo, data)
+    setFilteredData(sortData(filtered))
+  }, [data, selectedRepo])
+
+  if (isLoading) {
+    return <Text>Loading...</Text>
+  }
+
+  if (!repos || !events || isError) {
+    return null
+  }
+
+  return (
+    <Card marginTop='mt-5'>
+      <Flex spaceX='space-x-8'>
+        <Title>Repo Stats</Title>
+        <Dropdown
+          onValueChange={(value: string) => setSelectedRepo(value)}
+          placeholder='Repo Selection'
+          maxWidth='max-w-xs'
+        >
+          {repos.map((repo) => (
+            <DropdownItem key={repo} value={repo} text={repo} />
+          ))}
+        </Dropdown>
+      </Flex>
+      <Flex marginTop='mt-6'>
+        <Text>
+          <Bold>Event Type</Bold>
+        </Text>
+        <Text>
+          <Bold>#</Bold>
+        </Text>
+      </Flex>
+
+      <BarList data={filteredData} marginTop='mt-4' />
+    </Card>
+  )
+}

@@ -49,7 +49,7 @@ export const useGithubEvents = (
     }
   }
 
-  const repos = allData
+  const repos: string[] = allData
     .map((item: GithubEvent) => item.repo.name)
     .filter((elem, index, self) => index === self.indexOf(elem))
 
@@ -66,7 +66,7 @@ export const useGithubEvents = (
     repos,
     eventTypes,
     actions,
-    isLoading: !error && !data,
+    isLoading,
     isError,
   }
 }
