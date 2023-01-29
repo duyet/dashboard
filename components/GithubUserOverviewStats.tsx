@@ -1,33 +1,37 @@
 import { ColGrid, Text, Card } from '@tremor/react'
-import { Metric, Footer, ButtonInline } from '@tremor/react'
+import { Metric, Footer, Button } from '@tremor/react'
 import { ArrowNarrowRightIcon } from '@heroicons/react/solid'
 import type { ColGridProps } from '@tremor/react/dist/esm/types/components/layout-elements/ColGrid/ColGrid'
 
-import { useGithubUser } from '../../hooks/github'
+import { useGithubUser } from '../hooks/github'
 
-type GithubUserStatsProps = {
+type GithubUserOverviewStatsProps = {
   username: string
 }
 
-type GithubUserStatsPropsAndColGridProps = Omit<
-  GithubUserStatsProps & ColGridProps,
+type GithubUserOverviewStatsPropsAndColGridProps = Omit<
+  GithubUserOverviewStatsProps & ColGridProps,
   'children'
 >
 
-export default function GithubUserStats({
+export default function GithubUserOverviewStats({
   username,
   ...props
-}: GithubUserStatsPropsAndColGridProps) {
-  const { user } = useGithubUser(username)
+}: GithubUserOverviewStatsPropsAndColGridProps) {
+  const { user, isLoading, errorMessage } = useGithubUser(username)
 
-  if (!user) return <></>
+  if (!user || isLoading) return null
+  if (errorMessage) {
+    console.error(errorMessage)
+    return null
+  }
 
   return (
     <ColGrid
       numColsMd={4}
       numColsSm={2}
-      gapX='gap-x-3'
-      gapY='gap-y-3'
+      gapX="gap-x-3"
+      gapY="gap-y-3"
       {...props}
     >
       <Card>
@@ -35,11 +39,12 @@ export default function GithubUserStats({
         <Metric>{user?.public_repos}</Metric>
         <Footer>
           <a href={`https://github.com/${username}/?tab=repositories`}>
-            <ButtonInline
-              size='sm'
-              text='View details'
+            <Button
+              size="sm"
+              variant="light"
+              text="View details"
               icon={ArrowNarrowRightIcon}
-              iconPosition='right'
+              iconPosition="right"
             />
           </a>
         </Footer>
@@ -51,11 +56,12 @@ export default function GithubUserStats({
 
         <Footer>
           <a href={`https://gist.github.com/${username}`}>
-            <ButtonInline
-              size='sm'
-              text='View details'
+            <Button
+              size="sm"
+              variant="light"
+              text="View details"
               icon={ArrowNarrowRightIcon}
-              iconPosition='right'
+              iconPosition="right"
             />
           </a>
         </Footer>
@@ -67,11 +73,12 @@ export default function GithubUserStats({
 
         <Footer>
           <a href={`https://github.com/${username}/?tab=followers`}>
-            <ButtonInline
-              size='sm'
-              text='View details'
+            <Button
+              size="sm"
+              variant="light"
+              text="View details"
               icon={ArrowNarrowRightIcon}
-              iconPosition='right'
+              iconPosition="right"
             />
           </a>
         </Footer>
@@ -81,11 +88,12 @@ export default function GithubUserStats({
         <Metric>{user?.following}</Metric>
         <Footer>
           <a href={`https://github.com/${username}/?tab=following`}>
-            <ButtonInline
-              size='sm'
-              text='View details'
+            <Button
+              size="sm"
+              variant="light"
+              text="View details"
               icon={ArrowNarrowRightIcon}
-              iconPosition='right'
+              iconPosition="right"
             />
           </a>
         </Footer>

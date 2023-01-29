@@ -14,9 +14,9 @@ import {
   Text,
 } from '@tremor/react'
 
-import Loading from './Loading'
+import { Loading } from './Loading'
 import Error from './Error'
-import { useGithubEvents } from '../../hooks/github'
+import { useGithubEvents } from '../hooks/github'
 
 // TableView props type
 type TableViewProps = {
@@ -52,12 +52,12 @@ export default function GithubEvents({ username }: TableViewProps) {
   }
 
   return (
-    <Card marginTop='mt-5'>
-      <Flex justifyContent='justify-end' spaceX='space-x-2'>
+    <Card marginTop="mt-5">
+      <Flex justifyContent="justify-end" spaceX="space-x-2">
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedTypes(value)}
-          placeholder='Event Type(s)'
-          maxWidth='max-w-0'
+          placeholder="Event Type(s)"
+          maxWidth="max-w-0"
         >
           {eventTypes.map((type) => (
             <MultiSelectBoxItem key={type} value={type} text={type} />
@@ -65,15 +65,15 @@ export default function GithubEvents({ username }: TableViewProps) {
         </MultiSelectBox>
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedRepos(value)}
-          placeholder='Repo(s)'
-          maxWidth='max-w-0'
+          placeholder="Repo(s)"
+          maxWidth="max-w-0"
         >
           {repos.map((name) => (
             <MultiSelectBoxItem key={name} value={name} text={name} />
           ))}
         </MultiSelectBox>
       </Flex>
-      <Table marginTop='mt-6'>
+      <Table marginTop="mt-6">
         <TableHead>
           <TableRow>
             <TableHeaderCell>Event Time</TableHeaderCell>
@@ -89,7 +89,7 @@ export default function GithubEvents({ username }: TableViewProps) {
             .map((item) => (
               <TableRow key={item.id}>
                 <TableCell>
-                  <Text color='gray' truncate={true}>
+                  <Text color="gray" truncate={true}>
                     {item.created_at}
                   </Text>
                 </TableCell>
@@ -102,8 +102,8 @@ export default function GithubEvents({ username }: TableViewProps) {
                 <TableCell>
                   <a
                     href={'https://github.com/' + item.repo.name}
-                    target='_blank'
-                    rel='noreferrer'
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     {item.repo.name}
                   </a>

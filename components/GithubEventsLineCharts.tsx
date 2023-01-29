@@ -1,10 +1,9 @@
-import { AreaChart, Block, Card } from '@tremor/react'
+import { AreaChart, Card } from '@tremor/react'
 
-import { useGithubEvents } from '../../hooks/github'
-import { GithubEvent } from '../../types/githubEvents'
-import Loading from './Loading'
+import { useGithubEvents } from '../hooks/github'
+import { GithubEvent } from '../types/githubEvents'
+import { LoadingChart } from './Loading'
 import Error from './Error'
-import GithubUserStats from './GithubUserStats'
 
 type ChartData = {
   [key: string]: string | number
@@ -70,32 +69,28 @@ type TableViewProps = {
   username: string
 }
 
-export default function GithubOverviewCharts({ username }: TableViewProps) {
-  const { events, isLoading, isError } = useGithubEvents(username)
+export default function GithubEventsLineCharts({ username }: TableViewProps) {
+  const { events, isLoading, errorMessage, isError } = useGithubEvents(username)
 
-  if (isError) return <Error />
-  if (isLoading) return <Loading />
+  if (isError && errorMessage) return <Error message={errorMessage} />
+  if (isLoading) return <LoadingChart />
   if (!events) return <p>No events</p>
 
   let chartdata = prepareData(events)
   let categories = getCategories(events)
 
   return (
-    <Block>
-      <GithubUserStats username={username} marginTop="mt-10" />
-
-      <Card marginTop="mt-5">
-        <AreaChart
-          data={chartdata}
-          categories={categories}
-          stack={true}
-          autoMinValue={true}
-          showGridLines={true}
-          showGradient={true}
-          dataKey="date"
-          marginTop="mt-4"
-        />
-      </Card>
-    </Block>
+    <Card marginTop="mt-5">
+      <AreaChart
+        data={chartdata}
+        categories={categories}
+        stack={true}
+        autoMinValue={true}
+        showGridLines={true}
+        showGradient={true}
+        dataKey="date"
+        marginTop="mt-4"
+      />
+    </Card>
   )
 }
