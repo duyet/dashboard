@@ -20,8 +20,9 @@ export default function GithubUserPicker({ username }: Props) {
     const keyDownHandler = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault()
+        const path = router.pathname
         const user = input.replace('@', '')
-        window.location.href = `/github?user=${user}`
+        window.location.href = `${path}?user=${user}`
       }
     }
 
