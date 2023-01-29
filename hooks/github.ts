@@ -72,14 +72,15 @@ export const useGithubEvents = (
 }
 
 export const useGithubUser = (user: string) => {
-  const { data, error } = useSWR<GithubUser>(
-    `https://api.github.com/users/${user}`,
+  const { data, isLoading, error } = useSWR<GithubUser>(
+    user ? `https://api.github.com/users/${user}` : null,
     fetcher
   )
 
   return {
     user: data,
-    isLoading: !error && !data,
+    error,
+    isLoading,
     isError: error,
   }
 }

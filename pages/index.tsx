@@ -6,7 +6,7 @@ export default function Page() {
 
   // Redirect to /duyet if no username is provided
   useEffect(() => {
-    router.push('/duyet')
+    router.push('/github?user=duyet')
   }, [router])
 
   return null

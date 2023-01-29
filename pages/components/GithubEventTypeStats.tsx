@@ -16,13 +16,6 @@ type Data = {
   value: number
 }
 
-const sortData = (data: any[]) =>
-  data.sort((a, b) => {
-    if (a.value < b.value) return 1
-    if (a.value > b.value) return -1
-    return 0
-  })
-
 const filterByRepoName = (repo: string, data: Data[]) =>
   data.filter((item) => item.repo === repo)
 
@@ -66,6 +59,13 @@ export default function GithubEventTypeStats({
   }, [repos, events])
 
   useEffect(() => {
+    const sortData = (data: any[]) =>
+      data.sort((a, b) => {
+        if (a.value < b.value) return 1
+        if (a.value > b.value) return -1
+        return 0
+      })
+
     const filtered = filterByRepoName(selectedRepo, data)
     setFilteredData(sortData(filtered))
   }, [data, selectedRepo])
@@ -79,13 +79,13 @@ export default function GithubEventTypeStats({
   }
 
   return (
-    <Card marginTop='mt-5'>
-      <Flex spaceX='space-x-8'>
+    <Card marginTop="mt-5">
+      <Flex spaceX="space-x-8">
         <Title>Repo Stats</Title>
         <Dropdown
           onValueChange={(value: string) => setSelectedRepo(value)}
-          placeholder='Repo Selection'
-          maxWidth='max-w-0'
+          placeholder="Repo Selection"
+          maxWidth="max-w-0"
         >
           {repos.map((repo) => (
             <DropdownItem key={repo} value={repo} text={repo} />
@@ -95,12 +95,12 @@ export default function GithubEventTypeStats({
 
       <DonutChart
         data={filteredData}
-        variant='pie'
-        marginTop='mt-6'
-        height='h-32'
+        variant="pie"
+        marginTop="mt-6"
+        height="h-32"
       />
 
-      <Flex marginTop='mt-6'>
+      <Flex marginTop="mt-6">
         <Text>
           <Bold>Event Type</Bold>
         </Text>
@@ -109,7 +109,7 @@ export default function GithubEventTypeStats({
         </Text>
       </Flex>
 
-      <BarList data={filteredData} marginTop='mt-4' />
+      <BarList data={filteredData} marginTop="mt-4" />
     </Card>
   )
 }

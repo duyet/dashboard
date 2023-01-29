@@ -1,30 +1,53 @@
-import { Dropdown, DropdownItem } from '@tremor/react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { TextInput } from '@tremor/react'
 
-// TableView props type
-type GithubUserProps = {
-  list: string[]
-  selectedUser: string
-  setSelectedUser: (username: string) => void
+type Props = {
+  username: string
 }
 
-export default function GithubUser({
-  list,
-  selectedUser,
-  setSelectedUser,
-}: GithubUserProps) {
-  if (!list) return <></>
+export default function GithubUserPicker({ username }: Props) {
+  const router = useRouter()
+  const [input, setInput] = useState<string>(username)
+
+  useEffect(() => {
+    if (router.query.user) {
+      setInput(router.query.user as string)
+    }
+  }, [router])
+
+  useEffect(() => {
+    const keyDownHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        const user = input.replace('@', '')
+        window.location.href = `/github?user=${user}`
+      }
+    }
+
+    const textInput = document.getElementById('github-user-picker')
+
+    if (textInput) {
+      textInput.addEventListener('keydown', keyDownHandler)
+
+      return () => {
+        textInput.removeEventListener('keydown', keyDownHandler)
+      }
+    }
+  }, [router, input, username])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.target.value)
+  }
 
   return (
-    <Dropdown
-      placeholder='User'
-      defaultValue={selectedUser}
-      onValueChange={(value) => setSelectedUser(value)}
-      maxWidth='max-w-0'
-      marginTop='mt-0'
-    >
-      {list.map((user) => (
-        <DropdownItem key={user} text={user} value={user} />
-      ))}
-    </Dropdown>
+    <TextInput
+      id="github-user-picker"
+      value={input}
+      defaultValue={input}
+      onChange={handleChange}
+      maxWidth="max-w-0"
+      placeholder="@username"
+    />
   )
 }

@@ -14,13 +14,6 @@ type Data = {
   value: number
 }
 
-const sortData = (data: any[]) =>
-  data.sort((a, b) => {
-    if (a.value < b.value) return 1
-    if (a.value > b.value) return -1
-    return 0
-  })
-
 export default function GithubTopRepoStats({
   username,
 }: GithubTopRepoStatsProps) {
@@ -28,7 +21,14 @@ export default function GithubTopRepoStats({
   const [data, setData] = useState<Data[]>([])
 
   useEffect(() => {
-    if (!repos || !events) return
+    if (!repos || !events || isLoading || isError) return
+
+    const sortData = (data: any[]) =>
+      data.sort((a, b) => {
+        if (a.value < b.value) return 1
+        if (a.value > b.value) return -1
+        return 0
+      })
 
     // Group by repo name, count event
     const eventCountByRepo: Data[] = repos.map((repo: string) => {
@@ -43,7 +43,7 @@ export default function GithubTopRepoStats({
     })
 
     setData(sortData(eventCountByRepo).slice(0, 10))
-  }, [events, repos, setData])
+  }, [events, repos, isLoading, isError])
 
   if (isLoading) {
     return <Text>Loading...</Text>
@@ -54,12 +54,12 @@ export default function GithubTopRepoStats({
   }
 
   return (
-    <Card marginTop='mt-5'>
+    <Card marginTop="mt-5">
       <Title>Top 5 Repos</Title>
 
-      <DonutChart data={data} variant='pie' marginTop='mt-6' height='h-32' />
+      <DonutChart data={data} variant="pie" marginTop="mt-6" height="h-32" />
 
-      <Flex marginTop='mt-6'>
+      <Flex marginTop="mt-6">
         <Text>
           <Bold>Repository</Bold>
         </Text>
@@ -68,7 +68,7 @@ export default function GithubTopRepoStats({
         </Text>
       </Flex>
 
-      <BarList data={data} marginTop='mt-4' />
+      <BarList data={data} marginTop="mt-4" />
     </Card>
   )
 }
