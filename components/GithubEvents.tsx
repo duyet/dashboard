@@ -14,9 +14,9 @@ import {
   Text,
 } from '@tremor/react'
 
-import Loading from './Loading'
+import { Loading } from './Loading'
 import Error from './Error'
-import { useGithubEvents } from '../../hooks/github'
+import { useGithubEvents } from '../hooks/github'
 
 // TableView props type
 type TableViewProps = {

@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import { ChartPieIcon } from '@heroicons/react/solid'
 import { Block, Flex, Tab, TabList, Title, ColGrid, Icon } from '@tremor/react'
 
-import GithubEvents from './components/GithubEvents'
-import GithubUserPicker from './components/GithubUserPicker'
-import GithubTopRepoStats from './components/GithubTopRepoStats'
-import GithubEventTypeStats from './components/GithubEventTypeStats'
-import GithubEventsLineCharts from './components/GithubEventsLineCharts'
-import GithubUserOverviewStats from './components/GithubUserOverviewStats'
+import GithubEvents from '../components/GithubEvents'
+import GithubUserPicker from '../components/GithubUserPicker'
+import GithubTopRepoStats from '../components/GithubTopRepoStats'
+import GithubEventTypeStats from '../components/GithubEventTypeStats'
+import GithubEventsLineCharts from '../components/GithubEventsLineCharts'
+import GithubUserOverviewStats from '../components/GithubUserOverviewStats'
 
 export default function Page() {
   const router = useRouter()
@@ -22,7 +22,7 @@ export default function Page() {
   }, [router])
 
   return (
-    <>
+    <div className="min-h-screen">
       <Flex justifyContent="justify-between" alignItems="items-center">
         <Flex justifyContent="justify-start">
           <Icon icon={ChartPieIcon} />
@@ -58,6 +58,6 @@ export default function Page() {
           <GithubEvents username={username} />
         </>
       )}
-    </>
+    </div>
   )
 }

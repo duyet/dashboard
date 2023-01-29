@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { BarList, DonutChart } from '@tremor/react'
 import { Flex, Title, Text, Card, Bold } from '@tremor/react'
 
-import { useGithubEvents } from '../../hooks/github'
-import { GithubEvent } from '../../types/githubEvents'
+import { LoadingList } from './Loading'
+import { useGithubEvents } from '../hooks/github'
+import { GithubEvent } from '../types/githubEvents'
 
 type GithubTopRepoStatsProps = {
   username: string
@@ -45,9 +46,7 @@ export default function GithubTopRepoStats({
     setData(sortData(eventCountByRepo).slice(0, 10))
   }, [events, repos, isLoading, isError])
 
-  if (isLoading) {
-    return <Text>Loading...</Text>
-  }
+  if (isLoading) return <LoadingList />
 
   if (!events || isError) {
     return null

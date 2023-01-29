@@ -1,8 +1,8 @@
 import { AreaChart, Card } from '@tremor/react'
 
-import { useGithubEvents } from '../../hooks/github'
-import { GithubEvent } from '../../types/githubEvents'
-import Loading from './Loading'
+import { useGithubEvents } from '../hooks/github'
+import { GithubEvent } from '../types/githubEvents'
+import { LoadingChart } from './Loading'
 import Error from './Error'
 
 type ChartData = {
@@ -70,10 +70,10 @@ type TableViewProps = {
 }
 
 export default function GithubEventsLineCharts({ username }: TableViewProps) {
-  const { events, isLoading, isError } = useGithubEvents(username)
+  const { events, isLoading, errorMessage, isError } = useGithubEvents(username)
 
-  if (isError) return <Error />
-  if (isLoading) return <Loading />
+  if (isError && errorMessage) return <Error message={errorMessage} />
+  if (isLoading) return <LoadingChart />
   if (!events) return <p>No events</p>
 
   let chartdata = prepareData(events)

@@ -3,8 +3,9 @@ import { Title, Text, Bold } from '@tremor/react'
 import { Flex, Card, Dropdown, DropdownItem } from '@tremor/react'
 import { DonutChart, BarList } from '@tremor/react'
 
-import { useGithubEvents } from '../../hooks/github'
-import { GithubEvent } from '../../types/githubEvents'
+import { LoadingList } from './Loading'
+import { useGithubEvents } from '../hooks/github'
+import { GithubEvent } from '../types/githubEvents'
 
 type GithubEventTypeStatsProps = {
   username: string
@@ -70,9 +71,7 @@ export default function GithubEventTypeStats({
     setFilteredData(sortData(filtered))
   }, [data, selectedRepo])
 
-  if (isLoading) {
-    return <Text>Loading...</Text>
-  }
+  if (isLoading) return <LoadingList />
 
   if (!repos || !events || isError) {
     return null

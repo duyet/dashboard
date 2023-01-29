@@ -3,7 +3,7 @@ import { Metric, Footer, Button } from '@tremor/react'
 import { ArrowNarrowRightIcon } from '@heroicons/react/solid'
 import type { ColGridProps } from '@tremor/react/dist/esm/types/components/layout-elements/ColGrid/ColGrid'
 
-import { useGithubUser } from '../../hooks/github'
+import { useGithubUser } from '../hooks/github'
 
 type GithubUserOverviewStatsProps = {
   username: string
@@ -18,11 +18,11 @@ export default function GithubUserOverviewStats({
   username,
   ...props
 }: GithubUserOverviewStatsPropsAndColGridProps) {
-  const { user, isLoading, error } = useGithubUser(username)
+  const { user, isLoading, errorMessage } = useGithubUser(username)
 
   if (!user || isLoading) return null
-  if (error) {
-    console.error(error)
+  if (errorMessage) {
+    console.error(errorMessage)
     return null
   }
 

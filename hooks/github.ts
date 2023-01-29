@@ -17,13 +17,12 @@ export const useGithubEvents = (
       `https://api.github.com/users/${user}/events?per_page=${per_page}&page=${page}`
   )
 
-  const { data, error, isLoading } = useSWR<Array<GithubEvent[] | GithubError>>(
+  const { data, isLoading } = useSWR<Array<GithubEvent[] | GithubError>>(
     urls,
     fetcherMultiple
   )
 
   if (!data) return { isLoading, isError: false }
-  if (error) return { isLoading, isError: true }
 
   // Data is array of array
   let allData: GithubEvent[] = (data as Array<GithubEvent[]>)
@@ -72,15 +71,22 @@ export const useGithubEvents = (
 }
 
 export const useGithubUser = (user: string) => {
-  const { data, isLoading, error } = useSWR<GithubUser>(
-    user ? `https://api.github.com/users/${user}` : null,
+  const { data, isLoading } = useSWR<GithubUser>(
+    `https://api.github.com/users/${user}`,
     fetcher
   )
 
+  // Error capturing on each data: { message: 'API rate limit ...' }
+  const isError = (data as unknown as GithubError)?.message?.includes(
+    'API rate limit'
+  )
+
+  const errorMessage = (data as unknown as GithubError)?.message
+
   return {
     user: data,
-    error,
     isLoading,
-    isError: error,
+    isError,
+    errorMessage,
   }
 }
