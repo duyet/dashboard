@@ -1,5 +1,6 @@
-import { Flex, Title, Text, Card, Bold, BarList } from '@tremor/react'
 import { useEffect, useState } from 'react'
+import { BarList, DonutChart } from '@tremor/react'
+import { Flex, Title, Text, Card, Bold } from '@tremor/react'
 
 import { useGithubEvents } from '../../hooks/github'
 import { GithubEvent } from '../../types/githubEvents'
@@ -55,6 +56,9 @@ export default function GithubTopRepoStats({
   return (
     <Card marginTop='mt-5'>
       <Title>Top 5 Repos</Title>
+
+      <DonutChart data={data} variant='pie' marginTop='mt-6' height='h-32' />
+
       <Flex marginTop='mt-6'>
         <Text>
           <Bold>Repository</Bold>

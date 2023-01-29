@@ -1,5 +1,5 @@
-import { Flex, Metric, Text, Card } from '@tremor/react'
-import { FlexProps } from '@tremor/react/dist/esm/types/components/layout-elements/Flex/Flex'
+import { ColGrid, Metric, Text, Card } from '@tremor/react'
+import { ColGridProps } from '@tremor/react/dist/esm/types/components/layout-elements/ColGrid/ColGrid'
 
 import { useGithubUser } from '../../hooks/github'
 
@@ -7,21 +7,27 @@ type GithubUserStatsProps = {
   username: string
 }
 
-type GithubUserStatsPropsAndFlexProps = Omit<
-  GithubUserStatsProps & FlexProps,
+type GithubUserStatsPropsAndColGridProps = Omit<
+  GithubUserStatsProps & ColGridProps,
   'children'
 >
 
 export default function GithubUserStats({
   username,
-  ...flexProps
-}: GithubUserStatsPropsAndFlexProps) {
+  ...props
+}: GithubUserStatsPropsAndColGridProps) {
   const { user } = useGithubUser(username)
 
   if (!user) return <></>
 
   return (
-    <Flex spaceX="space-x-5" {...flexProps}>
+    <ColGrid
+      numColsMd={4}
+      numColsSm={2}
+      gapX='gap-x-3'
+      gapY='gap-y-3'
+      {...props}
+    >
       <Card>
         <Text>Public Repos</Text>
         <Metric>{user?.public_repos}</Metric>
@@ -38,6 +44,6 @@ export default function GithubUserStats({
         <Text>Following</Text>
         <Metric>{user?.following}</Metric>
       </Card>
-    </Flex>
+    </ColGrid>
   )
 }

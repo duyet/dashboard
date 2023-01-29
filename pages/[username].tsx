@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { Block, Flex, Tab, TabList, Title, ColGrid } from '@tremor/react'
+import { Block, Flex, Tab, TabList, Title, ColGrid, Icon } from '@tremor/react'
+import { ChartPieIcon } from '@heroicons/react/solid'
 
-import Chart from './components/Chart'
-import KpiCardGrid from './components/Cards'
-import GithubChart from './components/GithubChart'
 import GithubEvents from './components/GithubEvents'
 import GithubUserPicker from './components/GithubUserPicker'
 import GithubTopRepoStats from './components/GithubTopRepoStats'
+import GithubOverviewCharts from './components/GithubOverviewCharts'
 import GithubEventTypeStats from './components/GithubEventTypeStats'
 
 // TODO: input from user
@@ -21,41 +20,41 @@ export default function Page() {
 
   return (
     <>
-      <Title>Dashboard</Title>
+      <Flex justifyContent='justify-between' alignItems='items-center'>
+        <Flex justifyContent='justify-start'>
+          <Icon icon={ChartPieIcon} />
+          <Title>Dashboard</Title>
+        </Flex>
+        <GithubUserPicker
+          list={GITHUB_USERS}
+          selectedUser={username}
+          setSelectedUser={(user) => router.push(`/${user}`)}
+        />
+      </Flex>
+
       <TabList
         defaultValue={1}
         onValueChange={(value) => setSelectedView(value)}
         marginTop='mt-6'
       >
-        <Tab value={1} text='Github Events' />
-        <Tab value={2} text='Overview' />
+        <Tab value={1} text='Overview' />
+        <Tab value={2} text='Events' />
       </TabList>
 
       {selectedView == 1 && (
         <Block marginTop='mt-6'>
-          <Flex>
-            <GithubUserPicker
-              list={GITHUB_USERS}
-              selectedUser={username}
-              setSelectedUser={(user) => router.push(`/${user}`)}
-            />
-          </Flex>
-          <GithubChart username={username} />
+          <GithubOverviewCharts username={username} />
+
           <ColGrid numColsSm={2} gapX='gap-x-6' gapY='gap-y-6'>
             <GithubTopRepoStats username={username} />
             <GithubEventTypeStats username={username} />
           </ColGrid>
-          <GithubEvents username={username} />
         </Block>
       )}
 
       {selectedView === 2 && (
         <>
-          <KpiCardGrid />
-
-          <Block marginTop='mt-6'>
-            <Chart />
-          </Block>
+          <GithubEvents username={username} />
         </>
       )}
     </>

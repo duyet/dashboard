@@ -53,11 +53,11 @@ export default function GithubEvents({ username }: TableViewProps) {
 
   return (
     <Card marginTop='mt-5'>
-      <Flex justifyContent='justify-start' spaceX='space-x-2'>
+      <Flex justifyContent='justify-end' spaceX='space-x-2'>
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedTypes(value)}
           placeholder='Event Type(s)'
-          maxWidth='max-w-xs'
+          maxWidth='max-w-0'
         >
           {eventTypes.map((type) => (
             <MultiSelectBoxItem key={type} value={type} text={type} />
@@ -66,7 +66,7 @@ export default function GithubEvents({ username }: TableViewProps) {
         <MultiSelectBox
           onValueChange={(value: string[]) => setSelectedRepos(value)}
           placeholder='Repo(s)'
-          maxWidth='max-w-xs'
+          maxWidth='max-w-0'
         >
           {repos.map((name) => (
             <MultiSelectBoxItem key={name} value={name} text={name} />
