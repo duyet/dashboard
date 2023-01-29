@@ -1,5 +1,7 @@
-import { ColGrid, Metric, Text, Card } from '@tremor/react'
-import { ColGridProps } from '@tremor/react/dist/esm/types/components/layout-elements/ColGrid/ColGrid'
+import { ColGrid, Text, Card } from '@tremor/react'
+import { Metric, Footer, ButtonInline } from '@tremor/react'
+import { ArrowNarrowRightIcon } from '@heroicons/react/solid'
+import type { ColGridProps } from '@tremor/react/dist/esm/types/components/layout-elements/ColGrid/ColGrid'
 
 import { useGithubUser } from '../../hooks/github'
 
@@ -31,18 +33,62 @@ export default function GithubUserStats({
       <Card>
         <Text>Public Repos</Text>
         <Metric>{user?.public_repos}</Metric>
+        <Footer>
+          <a href={`https://github.com/${username}/?tab=repositories`}>
+            <ButtonInline
+              size='sm'
+              text='View details'
+              icon={ArrowNarrowRightIcon}
+              iconPosition='right'
+            />
+          </a>
+        </Footer>
       </Card>
+
       <Card>
         <Text>Public Gists</Text>
         <Metric>{user?.public_gists}</Metric>
+
+        <Footer>
+          <a href={`https://gist.github.com/${username}`}>
+            <ButtonInline
+              size='sm'
+              text='View details'
+              icon={ArrowNarrowRightIcon}
+              iconPosition='right'
+            />
+          </a>
+        </Footer>
       </Card>
+
       <Card>
         <Text>Followers</Text>
         <Metric>{user?.followers}</Metric>
+
+        <Footer>
+          <a href={`https://github.com/${username}/?tab=followers`}>
+            <ButtonInline
+              size='sm'
+              text='View details'
+              icon={ArrowNarrowRightIcon}
+              iconPosition='right'
+            />
+          </a>
+        </Footer>
       </Card>
       <Card>
         <Text>Following</Text>
         <Metric>{user?.following}</Metric>
+        <Footer>
+          <a href={`https://github.com/${username}/?tab=following`}>
+            <ButtonInline
+              size='sm'
+              text='View details'
+              icon={ArrowNarrowRightIcon}
+              iconPosition='right'
+            />
+          </a>
+        </Footer>
       </Card>
     </ColGrid>
   )
