@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Title, Text, Bold } from '@tremor/react'
-import { Flex, Card, BarList, Dropdown, DropdownItem } from '@tremor/react'
+import { Flex, Card, Dropdown, DropdownItem } from '@tremor/react'
+import { DonutChart, BarList } from '@tremor/react'
 
 import { useGithubEvents } from '../../hooks/github'
 import { GithubEvent } from '../../types/githubEvents'
@@ -61,7 +62,7 @@ export default function GithubEventTypeStats({
       value: events.filter((item: GithubEvent) => item.type === type).length,
     }))
 
-    setData(Object.assign([], eventCountByRepo, eventCountAllRepo))
+    setData(eventCountByRepo.concat(eventCountAllRepo))
   }, [repos, events])
 
   useEffect(() => {
@@ -84,13 +85,21 @@ export default function GithubEventTypeStats({
         <Dropdown
           onValueChange={(value: string) => setSelectedRepo(value)}
           placeholder='Repo Selection'
-          maxWidth='max-w-xs'
+          maxWidth='max-w-0'
         >
           {repos.map((repo) => (
             <DropdownItem key={repo} value={repo} text={repo} />
           ))}
         </Dropdown>
       </Flex>
+
+      <DonutChart
+        data={filteredData}
+        variant='pie'
+        marginTop='mt-6'
+        height='h-32'
+      />
+
       <Flex marginTop='mt-6'>
         <Text>
           <Bold>Event Type</Bold>

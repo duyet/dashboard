@@ -70,7 +70,7 @@ type TableViewProps = {
   username: string
 }
 
-export default function GithubChart({ username }: TableViewProps) {
+export default function GithubOverviewCharts({ username }: TableViewProps) {
   const { events, isLoading, isError } = useGithubEvents(username)
 
   if (isError) return <Error />
@@ -88,6 +88,10 @@ export default function GithubChart({ username }: TableViewProps) {
         <AreaChart
           data={chartdata}
           categories={categories}
+          stack={true}
+          autoMinValue={true}
+          showGridLines={true}
+          showGradient={true}
           dataKey="date"
           marginTop="mt-4"
         />

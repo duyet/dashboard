@@ -18,20 +18,31 @@ describe('index page', () => {
     // should have tabs
     cy.get('main ol li').first().should('have.length.gt', 0)
 
-    // Should have "Github" tab
-    cy.get('main ol li').contains('Github')
+    // Should have "Overview" tab
+    cy.get('main ol li').contains('Overview')
+
+    // Should have "Events" tab
+    cy.get('main ol li').contains('Events')
   })
 
   it('should navigate to the first tab', () => {
     cy.get('main ol li').first().click()
 
-    // Should contains the <table>
-    cy.get('main table').should('have.length', 1)
-
     // TODO: Should contains the dropdown
   })
 
+  // Navigate to "Events" tab
   it('should navigate to the second tab', () => {
     cy.get('main ol li').eq(1).click()
+
+    cy.get('main').then(($main) => {
+      // Should contains the <table>
+      // or sometime it error because github api rare-limited
+      if ($main.find('table').length === 0) {
+        $main.text().includes('API rate limit exceeded')
+      } else {
+        cy.get('table').should('have.length', 1)
+      }
+    })
   })
 })

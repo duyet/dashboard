@@ -19,7 +19,7 @@ export default function GithubUser({
       placeholder='User'
       defaultValue={selectedUser}
       onValueChange={(value) => setSelectedUser(value)}
-      maxWidth='max-w-none'
+      maxWidth='max-w-0'
       marginTop='mt-0'
     >
       {list.map((user) => (
