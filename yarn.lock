@@ -234,10 +234,10 @@
   dependencies:
     tippy.js "^6.3.1"
 
-"@tremor/react@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-1.6.1.tgz#540f6d7b9261abe972f260efd093d466b7a215c3"
-  integrity sha512-mo64UVPArdPuzIAWDZvn3Fz+LLTJogA1fWGUfvtTjAKMVmRpY4GBC2ha4pWRHUphKwgvUoWjARoEb4/BOzDuqQ==
+"@tremor/react@1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@tremor/react/-/react-1.7.0.tgz#661b6c20d3369e7facba24367ea855927c17544c"
+  integrity sha512-PlER8rLiF1Id9Gy9FpO4Z9GSkzqQpts9lY5/4tiedHFoEUvgWH3uOGHwPPWiI91WbQlz+1jJRSctdW2KUcCEBw==
   dependencies:
     "@tippyjs/react" "^4.2.6"
     date-fns "^2.28.0"
