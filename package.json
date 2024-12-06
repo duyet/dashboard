@@ -31,7 +31,7 @@
     "autoprefixer": "10.4.20",
     "cypress": "12.17.4",
     "eslint": "8.57.1",
-    "eslint-config-next": "13.4.1",
+    "eslint-config-next": "13.5.7",
     "eslint-config-prettier": "8.8.0",
     "postcss": "8.4.49",
     "prettier": "2.8.8",
